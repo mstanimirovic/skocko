@@ -8,20 +8,38 @@
     <artifactId>skocko</artifactId>
     <version>1.0.0</version>
     <properties>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+
+        <javafx.version>21</javafx.version>
+
+        <mainClass>org.stanimirovic.skocko.App</mainClass>
+
+        <appName>Skocko</appName>
+        <appVendor>Mladen</appVendor>
+
+        <distDir>${project.build.directory}/dist</distDir>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>21</version>
+            <version>${javafx.version}</version>
         </dependency>
     </dependencies>
     <build>
@@ -29,7 +47,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
+                <version>3.14.1</version>
                 <configuration>
                     <release>21</release>
                 </configuration>
@@ -44,11 +62,290 @@
                         <!-- Usage: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.stanimirovic.skocko.App</mainClass>
+                            <mainClass>${mainClass}</mainClass>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- FAT JAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.1</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+
+                        <configuration>
+                            <!-- bez dependency-reduced-pom.xml -->
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+
+                            <!-- finalno ime jar-a -->
+                            <finalName>skocko-all</finalName>
+
+                            <!-- Main-Class u manifestu -->
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${mainClass}</mainClass>
+                                </transformer>
+
+                                <!-- VAŽNO za ServiceLoader (često treba) -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
+
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-runtime-deps</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                            <outputDirectory>${project.build.directory}/jpackage/app/lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.6.2</version>
+                <executions>
+
+                    <execution>
+                        <id>jlink</id>
+                        <phase>package</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <executable>jlink</executable>
+                            <arguments>
+                                <argument>--module-path</argument>
+                                <argument>${java.home}/jmods:${project.build.directory}/jpackage/app/lib</argument>
+
+                                <argument>--add-modules</argument>
+                                <argument>javafx.controls,javafx.fxml</argument>
+
+                                <argument>--output</argument>
+                                <argument>${project.build.directory}/jpackage/runtime</argument>
+
+                                <argument>--strip-debug</argument>
+                                <argument>--no-header-files</argument>
+                                <argument>--no-man-pages</argument>
+                                <argument>--compress=2</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>jpackage</id>
+                        <phase>package</phase>
+                        <goals><goal>exec</goal></goals>
+                        <configuration>
+                            <executable>jpackage</executable>
+                            <arguments>
+                                <argument>--type</argument>
+                                <argument>dmg</argument>
+
+                                <argument>--name</argument><argument>${appName}</argument>
+                                <argument>--app-version</argument><argument>${version}</argument>
+
+                                <argument>--input</argument>
+                                <argument>${project.build.directory}</argument>
+
+                                <argument>--main-jar</argument>
+                                <argument>skocko-all.jar</argument>
+
+                                <argument>--main-class</argument>
+                                <argument>${mainClass}</argument>
+
+                                <argument>--runtime-image</argument>
+                                <argument>${project.build.directory}/jpackage/runtime</argument>
+
+                                <argument>--dest</argument>
+                                <argument>${project.build.directory}/dist</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+
+
+
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>mac</id>
+            <activation><os><family>mac</family></os></activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.6.2</version>
+                        <executions>
+                            <execution>
+                                <id>jlink</id>
+                                <phase>package</phase>
+                                <goals><goal>exec</goal></goals>
+                                <configuration>
+                                    <executable>jlink</executable>
+                                    <arguments>
+                                        <argument>--module-path</argument>
+                                        <argument>${java.home}/jmods:${project.build.directory}/jpackage/app/lib</argument>
+
+                                        <argument>--add-modules</argument>
+                                        <argument>javafx.controls,javafx.fxml</argument>
+
+                                        <argument>--output</argument>
+                                        <argument>${project.build.directory}/jpackage/runtime</argument>
+
+                                        <argument>--strip-debug</argument>
+                                        <argument>--no-header-files</argument>
+                                        <argument>--no-man-pages</argument>
+                                        <argument>--compress=2</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals><goal>exec</goal></goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--type</argument>
+                                        <argument>dmg</argument>
+
+                                        <argument>--name</argument><argument>${appName}</argument>
+                                        <argument>--app-version</argument><argument>${version}</argument>
+
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}</argument>
+
+                                        <argument>--main-jar</argument>
+                                        <argument>skocko-all.jar</argument>
+
+                                        <argument>--main-class</argument>
+                                        <argument>${mainClass}</argument>
+
+                                        <argument>--runtime-image</argument>
+                                        <argument>${project.build.directory}/jpackage/runtime</argument>
+
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}/dist</argument>
+
+                                        <argument>--icon</argument>
+                                        <argument>${project.basedir}/src/main/resources/icons/app.icns</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation><os><family>windows</family></os></activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.6.2</version>
+                        <executions>
+                            <execution>
+                                <id>jlink</id>
+                                <phase>package</phase>
+                                <goals><goal>exec</goal></goals>
+                                <configuration>
+                                    <executable>jlink</executable>
+                                    <arguments>
+                                        <argument>--module-path</argument>
+                                        <argument>
+                                            ${java.home}\jmods;
+                                            ${project.build.directory}\jpackage\app\lib
+                                        </argument>
+
+                                        <argument>--add-modules</argument>
+                                        <argument>javafx.controls,javafx.fxml</argument>
+
+                                        <argument>--output</argument>
+                                        <argument>${project.build.directory}\jpackage\runtime</argument>
+
+                                        <argument>--strip-debug</argument>
+                                        <argument>--no-header-files</argument>
+                                        <argument>--no-man-pages</argument>
+                                        <argument>--compress=2</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>jpackage</id>
+                                <phase>package</phase>
+                                <goals><goal>exec</goal></goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--type</argument><argument>msi</argument>
+
+                                        <argument>--name</argument><argument>${appName}</argument>
+                                        <argument>--app-version</argument><argument>${version}</argument>
+                                        <argument>--vendor</argument><argument>${appVendor}</argument>
+
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}</argument>
+
+                                        <argument>--main-jar</argument>
+                                        <argument>skocko-all.jar</argument>
+
+                                        <argument>--main-class</argument>
+                                        <argument>${mainClass}</argument>
+
+                                        <argument>--runtime-image</argument>
+                                        <argument>${project.build.directory}\jpackage\runtime</argument>
+
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}\dist</argument>
+
+                                        <argument>--win-menu</argument>
+                                        <argument>--win-shortcut</argument>
+                                        <argument>--win-dir-chooser</argument>
+
+                                        <!-- opcionalno: ikonica -->
+                                        <argument>--icon</argument>
+                                        <argument>${project.basedir}\src\main\resources\icons\app.ico</argument>
+
+<!--                                         preporučeno za upgrade path (UUID ti treba stabilan) -->
+<!--                                         <argument>&#45;&#45;win-upgrade-uuid</argument><argument>PUT-YOUR-UUID-HERE</argument> -->
+                                    </arguments>
+                                </configuration>
+                            </execution>
+
+
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

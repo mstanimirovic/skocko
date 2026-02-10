@@ -569,8 +569,6 @@
                 />
             </GridPane>
 
-            <Separator />
-
             <Label text="Kontrole" styleClass="sectionTitle" />
 
             <VBox spacing="10">
@@ -600,8 +598,6 @@
                     maxWidth="Infinity"
                 />
             </VBox>
-
-            <Separator />
 
             <Label text="(Opcionalno) Tajni kod" styleClass="sectionTitle" />
             <HBox spacing="8" fx:id="secretBox" styleClass="secretBox">
