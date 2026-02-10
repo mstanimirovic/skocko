@@ -281,8 +281,7 @@
                                     <arguments>
                                         <argument>--module-path</argument>
                                         <argument>
-                                            ${java.home}\jmods;
-                                            ${project.build.directory}\jpackage\app\lib
+                                            ${java.home}\jmods;${project.build.directory}\jpackage\app\lib
                                         </argument>
 
                                         <argument>--add-modules</argument>
@@ -335,8 +334,6 @@
                                         <argument>--icon</argument>
                                         <argument>${project.basedir}\src\main\resources\icons\app.ico</argument>
 
-<!--                                         preporučeno za upgrade path (UUID ti treba stabilan) -->
-<!--                                         <argument>&#45;&#45;win-upgrade-uuid</argument><argument>PUT-YOUR-UUID-HERE</argument> -->
                                     </arguments>
                                 </configuration>
                             </execution>
