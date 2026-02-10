@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.stanimirovic</groupId>
     <artifactId>skocko</artifactId>
-    <version>v1.0.1</version>
+    <version>1.0.1</version>
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -124,68 +124,7 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.6.2</version>
-                <executions>
-
-                    <execution>
-                        <id>jlink</id>
-                        <phase>package</phase>
-                        <goals><goal>exec</goal></goals>
-                        <configuration>
-                            <executable>jlink</executable>
-                            <arguments>
-                                <argument>--module-path</argument>
-                                <argument>${java.home}/jmods:${project.build.directory}/jpackage/app/lib</argument>
-
-                                <argument>--add-modules</argument>
-                                <argument>javafx.controls,javafx.fxml</argument>
-
-                                <argument>--output</argument>
-                                <argument>${project.build.directory}/jpackage/runtime</argument>
-
-                                <argument>--strip-debug</argument>
-                                <argument>--no-header-files</argument>
-                                <argument>--no-man-pages</argument>
-                                <argument>--compress=2</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-
-                    <execution>
-                        <id>jpackage</id>
-                        <phase>package</phase>
-                        <goals><goal>exec</goal></goals>
-                        <configuration>
-                            <executable>jpackage</executable>
-                            <arguments>
-                                <argument>--type</argument>
-                                <argument>dmg</argument>
-
-                                <argument>--name</argument><argument>${appName}</argument>
-                                <argument>--app-version</argument><argument>${version}</argument>
-
-                                <argument>--input</argument>
-                                <argument>${project.build.directory}</argument>
-
-                                <argument>--main-jar</argument>
-                                <argument>skocko-all.jar</argument>
-
-                                <argument>--main-class</argument>
-                                <argument>${mainClass}</argument>
-
-                                <argument>--runtime-image</argument>
-                                <argument>${project.build.directory}/jpackage/runtime</argument>
-
-                                <argument>--dest</argument>
-                                <argument>${project.build.directory}/dist</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-
-                </executions>
             </plugin>
-
-
-
         </plugins>
     </build>
 

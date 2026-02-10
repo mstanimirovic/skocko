@@ -1,0 +1,194 @@
+/* ===================================================
+   Skočko – Minimalist Professional Theme
+   Paleta: tamna podloga, off-white tekst, jedna
+   ćilibarska akcent boja. Čisto, tiho, precizno.
+   =================================================== */
+
+/* ---------- Root / Scene ---------- */
+.root {
+    -fx-background-color: #111111;
+    -fx-font-family: monospace;
+    -fx-font-weight: 900;
+    /*-fx-font-style: ;*/
+}
+
+/* ---------- Naslov ---------- */
+.title {
+    -fx-text-fill: #f0ece4;
+    -fx-font-size: 26px;
+    -fx-font-weight: 900;
+    -fx-letter-spacing: 6px;
+}
+
+/* ---------- Board ---------- */
+.board {
+    -fx-background-color: transparent;
+}
+
+/* ---------- Slot – polje za unos ---------- */
+.slot {
+    -fx-background-color: #1a1a1a;
+    -fx-background-radius: 6px;
+    -fx-border-color: #2a2a2a;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 6px;
+}
+
+.slot-active {
+    -fx-background-color: #1a1a1a;
+    -fx-border-color: #c8a96e;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 6px;
+}
+
+.slot-filled {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #c8a96e;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 6px;
+}
+
+/* ---------- Feedback tačkice ---------- */
+.dot {
+    -fx-fill: #1a1a1a;
+    -fx-stroke: #2a2a2a;
+    -fx-stroke-width: 1.5px;
+}
+
+/* Tačno mesto */
+.dot-red {
+    -fx-fill: #b83232;
+    -fx-stroke: transparent;
+}
+
+/* Tačan simbol, pogrešno mesto */
+.dot-yellow {
+    -fx-fill: #c8a96e;
+    -fx-stroke: transparent;
+}
+
+/* Nije u kombinaciji */
+.dot-grey {
+    -fx-fill: #2e2e2e;
+    -fx-stroke: transparent;
+}
+
+/* ---------- Paleta dugmadi (6 simbola) ---------- */
+.paletteBtn {
+    -fx-min-width: 88px;
+    -fx-min-height: 44px;
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #888888;
+    -fx-font-size: 11px;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 1.5px;
+    -fx-background-radius: 4px;
+    -fx-border-color: #2a2a2a;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.paletteBtn:hover {
+    -fx-background-color: #202020;
+    -fx-text-fill: #f0ece4;
+    -fx-border-color: #c8a96e;
+}
+
+.paletteBtn:pressed {
+    -fx-scale-x: 0.96;
+    -fx-scale-y: 0.96;
+    -fx-background-color: #111111;
+}
+
+/* Suptilna boja po simbolu */
+#btnSkocko  { -fx-text-fill: #b83232; -fx-font-size: 14px; -fx-font-weight: bold; }
+#btnTref    { -fx-text-fill: #6a9e7a; -fx-font-size: 14px; -fx-font-weight: bold; }
+#btnPik     { -fx-text-fill: #787878; -fx-font-size: 14px; -fx-font-weight: bold; }
+#btnSrce    { -fx-text-fill: #a84060; -fx-font-size: 14px; -fx-font-weight: bold; }
+#btnKaro    { -fx-text-fill: #c8a96e; -fx-font-size: 14px; -fx-font-weight: bold; }
+#btnZvezda  { -fx-text-fill: #7080a8; -fx-font-size: 14px; -fx-font-weight: bold; }
+
+/* ---------- Akciona dugmad ---------- */
+#btnSubmit {
+    -fx-background-color: #c8a96e;
+    -fx-text-fill: #111111;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 2px;
+    -fx-background-radius: 4px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+    -fx-min-height: 38px;
+}
+
+#btnSubmit:hover {
+    -fx-background-color: #d6b87c;
+}
+
+#btnSubmit:pressed {
+    -fx-background-color: #b5963d;
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+#btnBack, #btnClear {
+    -fx-background-color: #1a1a1a;
+    -fx-text-fill: #555555;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.5px;
+    -fx-background-radius: 4px;
+    -fx-border-color: #2a2a2a;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+    -fx-min-height: 36px;
+}
+
+#btnBack:hover, #btnClear:hover {
+    -fx-background-color: #202020;
+    -fx-text-fill: #e0dcd4;
+    -fx-border-color: #404040;
+}
+
+#btnNewGame {
+    -fx-background-color: transparent;
+    -fx-text-fill: #383838;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.5px;
+    -fx-background-radius: 4px;
+    -fx-border-color: #202020;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-cursor: hand;
+    -fx-min-height: 36px;
+}
+
+#btnNewGame:hover {
+    -fx-text-fill: #777777;
+    -fx-border-color: #333333;
+}
+
+/* ---------- Status poruke ---------- */
+.status-win {
+    -fx-text-fill: #6a9e7a;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 2px;
+}
+
+.status-lose {
+    -fx-text-fill: #b83232;
+    -fx-font-size: 14px;
+    -fx-font-weight: normal;
+    -fx-letter-spacing: 2px;
+}
+
+.status-info {
+    -fx-text-fill: #444444;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 1px;
+}
