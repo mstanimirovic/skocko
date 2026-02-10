@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.stanimirovic</groupId>
     <artifactId>skocko</artifactId>
-    <version>1.0.0</version>
+    <version>v1.0.1</version>
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

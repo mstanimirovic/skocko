@@ -77,7 +77,6 @@ jobs:
       - name: List downloaded artifacts
         run: ls -R all-artifacts
 
-      # Kreira Release i uploaduje sve .dmg/.msi iz build job-a
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:

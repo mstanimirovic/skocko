@@ -1,33 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<BorderPane
-    xmlns="http://javafx.com/javafx/21"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="org.stanimirovic.skocko.ui.GameController"
-    prefWidth="960"
-    prefHeight="640"
->
+
+<BorderPane prefHeight="640" prefWidth="960" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.stanimirovic.skocko.ui.GameController">
 
     <!-- TOP: naslov + status -->
     <top>
         <VBox spacing="6" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="16" right="16" bottom="10" left="16" />
+                <Insets bottom="10" left="16" right="16" top="16" />
             </padding>
 
-            <Label text="Škocko" styleClass="title" />
+            <Label styleClass="title" text="Skocko" />
 
             <HBox spacing="18">
-                <Label
-                    fx:id="attemptLabel"
-                    text="Pokušaj: 1/6"
-                    styleClass="muted"
-                />
-                <Label fx:id="messageLabel" text="" styleClass="muted" />
+                <Label fx:id="attemptLabel" styleClass="muted" text="Pokušaj: 1/6" />
+                <Label fx:id="messageLabel" styleClass="muted" text="" />
             </HBox>
         </VBox>
     </top>
@@ -36,474 +34,117 @@
     <center>
         <HBox spacing="24" BorderPane.alignment="CENTER">
             <padding>
-                <Insets top="10" right="16" bottom="16" left="16" />
+                <Insets bottom="16" left="16" right="16" top="10" />
             </padding>
 
             <!-- Left: guesses (6 x 4) -->
             <VBox spacing="10">
-                <Label text="Pokušaji" styleClass="sectionTitle" />
+                <Label styleClass="sectionTitle" text="Pokušaji" />
 
-                <GridPane
-                    fx:id="guessGrid"
-                    hgap="10"
-                    vgap="10"
-                    styleClass="board"
-                >
+                <GridPane fx:id="guessGrid" hgap="10" styleClass="board" vgap="10">
                     <!-- 6 redova * 4 kolone = 24 slot-a -->
                     <!-- Row 0 -->
-                    <StackPane
-                        fx:id="g00"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="0"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g01"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="1"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g02"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="2"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g03"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="3"
-                        styleClass="slot"
-                    />
+                    <StackPane fx:id="g00" styleClass="slot" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <StackPane fx:id="g01" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <StackPane fx:id="g02" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <StackPane fx:id="g03" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                     <!-- Row 1 -->
-                    <StackPane
-                        fx:id="g10"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="0"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g11"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="1"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g12"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="2"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g13"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="3"
-                        styleClass="slot"
-                    />
+                    <StackPane fx:id="g10" styleClass="slot" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <StackPane fx:id="g11" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <StackPane fx:id="g12" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <StackPane fx:id="g13" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     <!-- Row 2 -->
-                    <StackPane
-                        fx:id="g20"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="0"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g21"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="1"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g22"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="2"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g23"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="3"
-                        styleClass="slot"
-                    />
+                    <StackPane fx:id="g20" styleClass="slot" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <StackPane fx:id="g21" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <StackPane fx:id="g22" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <StackPane fx:id="g23" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                     <!-- Row 3 -->
-                    <StackPane
-                        fx:id="g30"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="0"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g31"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="1"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g32"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="2"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g33"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="3"
-                        styleClass="slot"
-                    />
+                    <StackPane fx:id="g30" styleClass="slot" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <StackPane fx:id="g31" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <StackPane fx:id="g32" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <StackPane fx:id="g33" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                     <!-- Row 4 -->
-                    <StackPane
-                        fx:id="g40"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="0"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g41"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="1"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g42"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="2"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g43"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="3"
-                        styleClass="slot"
-                    />
+                    <StackPane fx:id="g40" styleClass="slot" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <StackPane fx:id="g41" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <StackPane fx:id="g42" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                    <StackPane fx:id="g43" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                     <!-- Row 5 -->
-                    <StackPane
-                        fx:id="g50"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="0"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g51"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="1"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g52"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="2"
-                        styleClass="slot"
-                    />
-                    <StackPane
-                        fx:id="g53"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="3"
-                        styleClass="slot"
-                    />
+                    <StackPane fx:id="g50" styleClass="slot" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <StackPane fx:id="g51" styleClass="slot" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <StackPane fx:id="g52" styleClass="slot" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                    <StackPane fx:id="g53" styleClass="slot" GridPane.columnIndex="3" GridPane.rowIndex="5" />
 
                     <columnConstraints>
-                        <ColumnConstraints
-                            minWidth="64"
-                            prefWidth="64"
-                            maxWidth="64"
-                        />
-                        <ColumnConstraints
-                            minWidth="64"
-                            prefWidth="64"
-                            maxWidth="64"
-                        />
-                        <ColumnConstraints
-                            minWidth="64"
-                            prefWidth="64"
-                            maxWidth="64"
-                        />
-                        <ColumnConstraints
-                            minWidth="64"
-                            prefWidth="64"
-                            maxWidth="64"
-                        />
+                        <ColumnConstraints maxWidth="64" minWidth="64" prefWidth="64" />
+                        <ColumnConstraints maxWidth="64" minWidth="64" prefWidth="64" />
+                        <ColumnConstraints maxWidth="64" minWidth="64" prefWidth="64" />
+                        <ColumnConstraints maxWidth="64" minWidth="64" prefWidth="64" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
                     </rowConstraints>
                 </GridPane>
             </VBox>
 
             <!-- Right: feedback (6 x 4 small dots) -->
             <VBox spacing="10">
-                <Label text="Povratna info" styleClass="sectionTitle" />
+                <Label styleClass="sectionTitle" text="Povratna info" />
 
-                <GridPane
-                    fx:id="feedbackGrid"
-                    hgap="10"
-                    vgap="10"
-                    styleClass="board"
-                >
+                <GridPane fx:id="feedbackGrid" hgap="10" styleClass="board" vgap="10">
                     <!-- 6 redova * 4 tačkice = 24 -->
                     <!-- Row 0 -->
-                    <Circle
-                        fx:id="f00"
-                        radius="10"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="0"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f01"
-                        radius="10"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="1"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f02"
-                        radius="10"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="2"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f03"
-                        radius="10"
-                        GridPane.rowIndex="0"
-                        GridPane.columnIndex="3"
-                        styleClass="dot"
-                    />
+                    <Circle fx:id="f00" radius="10" styleClass="dot" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Circle fx:id="f01" radius="10" styleClass="dot" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Circle fx:id="f02" radius="10" styleClass="dot" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Circle fx:id="f03" radius="10" styleClass="dot" GridPane.columnIndex="3" GridPane.rowIndex="0" />
                     <!-- Row 1 -->
-                    <Circle
-                        fx:id="f10"
-                        radius="10"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="0"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f11"
-                        radius="10"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="1"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f12"
-                        radius="10"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="2"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f13"
-                        radius="10"
-                        GridPane.rowIndex="1"
-                        GridPane.columnIndex="3"
-                        styleClass="dot"
-                    />
+                    <Circle fx:id="f10" radius="10" styleClass="dot" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Circle fx:id="f11" radius="10" styleClass="dot" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Circle fx:id="f12" radius="10" styleClass="dot" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <Circle fx:id="f13" radius="10" styleClass="dot" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                     <!-- Row 2 -->
-                    <Circle
-                        fx:id="f20"
-                        radius="10"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="0"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f21"
-                        radius="10"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="1"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f22"
-                        radius="10"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="2"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f23"
-                        radius="10"
-                        GridPane.rowIndex="2"
-                        GridPane.columnIndex="3"
-                        styleClass="dot"
-                    />
+                    <Circle fx:id="f20" radius="10" styleClass="dot" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <Circle fx:id="f21" radius="10" styleClass="dot" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Circle fx:id="f22" radius="10" styleClass="dot" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                    <Circle fx:id="f23" radius="10" styleClass="dot" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                     <!-- Row 3 -->
-                    <Circle
-                        fx:id="f30"
-                        radius="10"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="0"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f31"
-                        radius="10"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="1"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f32"
-                        radius="10"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="2"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f33"
-                        radius="10"
-                        GridPane.rowIndex="3"
-                        GridPane.columnIndex="3"
-                        styleClass="dot"
-                    />
+                    <Circle fx:id="f30" radius="10" styleClass="dot" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                    <Circle fx:id="f31" radius="10" styleClass="dot" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Circle fx:id="f32" radius="10" styleClass="dot" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                    <Circle fx:id="f33" radius="10" styleClass="dot" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                     <!-- Row 4 -->
-                    <Circle
-                        fx:id="f40"
-                        radius="10"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="0"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f41"
-                        radius="10"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="1"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f42"
-                        radius="10"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="2"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f43"
-                        radius="10"
-                        GridPane.rowIndex="4"
-                        GridPane.columnIndex="3"
-                        styleClass="dot"
-                    />
+                    <Circle fx:id="f40" radius="10" styleClass="dot" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                    <Circle fx:id="f41" radius="10" styleClass="dot" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                    <Circle fx:id="f42" radius="10" styleClass="dot" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                    <Circle fx:id="f43" radius="10" styleClass="dot" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                     <!-- Row 5 -->
-                    <Circle
-                        fx:id="f50"
-                        radius="10"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="0"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f51"
-                        radius="10"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="1"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f52"
-                        radius="10"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="2"
-                        styleClass="dot"
-                    />
-                    <Circle
-                        fx:id="f53"
-                        radius="10"
-                        GridPane.rowIndex="5"
-                        GridPane.columnIndex="3"
-                        styleClass="dot"
-                    />
+                    <Circle fx:id="f50" radius="10" styleClass="dot" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                    <Circle fx:id="f51" radius="10" styleClass="dot" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                    <Circle fx:id="f52" radius="10" styleClass="dot" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                    <Circle fx:id="f53" radius="10" styleClass="dot" GridPane.columnIndex="3" GridPane.rowIndex="5" />
 
                     <columnConstraints>
-                        <ColumnConstraints
-                            minWidth="24"
-                            prefWidth="24"
-                            maxWidth="24"
-                        />
-                        <ColumnConstraints
-                            minWidth="24"
-                            prefWidth="24"
-                            maxWidth="24"
-                        />
-                        <ColumnConstraints
-                            minWidth="24"
-                            prefWidth="24"
-                            maxWidth="24"
-                        />
-                        <ColumnConstraints
-                            minWidth="24"
-                            prefWidth="24"
-                            maxWidth="24"
-                        />
+                        <ColumnConstraints maxWidth="24" minWidth="24" prefWidth="24" />
+                        <ColumnConstraints maxWidth="24" minWidth="24" prefWidth="24" />
+                        <ColumnConstraints maxWidth="24" minWidth="24" prefWidth="24" />
+                        <ColumnConstraints maxWidth="24" minWidth="24" prefWidth="24" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
-                        <RowConstraints
-                            minHeight="64"
-                            prefHeight="64"
-                            maxHeight="64"
-                        />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
+                        <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
                     </rowConstraints>
                 </GridPane>
 
-                <Label
-                    text="Legenda: crveno=tačno mesto, žuto=tačan simbol"
-                    styleClass="hint"
-                />
+                <Label styleClass="hint" text="Legenda: crveno=tačno mesto, žuto=tačan simbol" />
             </VBox>
         </HBox>
     </center>
@@ -512,95 +153,41 @@
     <right>
         <VBox spacing="14" BorderPane.alignment="TOP_CENTER">
             <padding>
-                <Insets top="16" right="16" bottom="16" left="6" />
+                <Insets bottom="16" left="6" right="16" top="16" />
             </padding>
 
-            <Label text="Simboli" styleClass="sectionTitle" />
+            <Label styleClass="sectionTitle" text="Simboli" />
 
             <GridPane hgap="10" vgap="10">
                 <!-- Paleta dugmadi: u controlleru mapiraš na Symbol -->
-                <Button
-                    fx:id="btnSkocko"
-                    text="Škocko"
-                    onAction="#onPickSkocko"
-                    styleClass="paletteBtn"
-                    GridPane.rowIndex="0"
-                    GridPane.columnIndex="0"
-                />
-                <Button
-                    fx:id="btnTref"
-                    text="Tref"
-                    onAction="#onPickTref"
-                    styleClass="paletteBtn"
-                    GridPane.rowIndex="0"
-                    GridPane.columnIndex="1"
-                />
-                <Button
-                    fx:id="btnPik"
-                    text="Pik"
-                    onAction="#onPickPik"
-                    styleClass="paletteBtn"
-                    GridPane.rowIndex="1"
-                    GridPane.columnIndex="0"
-                />
-                <Button
-                    fx:id="btnSrce"
-                    text="Srce"
-                    onAction="#onPickSrce"
-                    styleClass="paletteBtn"
-                    GridPane.rowIndex="1"
-                    GridPane.columnIndex="1"
-                />
-                <Button
-                    fx:id="btnKaro"
-                    text="Karo"
-                    onAction="#onPickKaro"
-                    styleClass="paletteBtn"
-                    GridPane.rowIndex="2"
-                    GridPane.columnIndex="0"
-                />
-                <Button
-                    fx:id="btnZvezda"
-                    text="Zvezda"
-                    onAction="#onPickZvezda"
-                    styleClass="paletteBtn"
-                    GridPane.rowIndex="2"
-                    GridPane.columnIndex="1"
-                />
+                <Button fx:id="btnSkocko" onAction="#onPickSkocko" styleClass="paletteBtn" text="Skocko" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Button fx:id="btnTref" onAction="#onPickTref" styleClass="paletteBtn" text="Tref" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <Button fx:id="btnPik" onAction="#onPickPik" styleClass="paletteBtn" text="Pik" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <Button fx:id="btnSrce" onAction="#onPickSrce" styleClass="paletteBtn" text="Srce" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="btnKaro" onAction="#onPickKaro" styleClass="paletteBtn" text="Karo" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <Button fx:id="btnZvezda" onAction="#onPickZvezda" styleClass="paletteBtn" text="Zvezda" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
             </GridPane>
 
-            <Label text="Kontrole" styleClass="sectionTitle" />
+            <Label styleClass="sectionTitle" text="Kontrole" />
 
             <VBox spacing="10">
-                <Button
-                    fx:id="btnBack"
-                    text="Obriši poslednji"
-                    onAction="#onBackspace"
-                    maxWidth="Infinity"
-                />
-                <Button
-                    fx:id="btnClear"
-                    text="Očisti unos"
-                    onAction="#onClear"
-                    maxWidth="Infinity"
-                />
-                <Button
-                    fx:id="btnSubmit"
-                    text="Potvrdi"
-                    onAction="#onSubmit"
-                    maxWidth="Infinity"
-                    defaultButton="true"
-                />
-                <Button
-                    fx:id="btnNewGame"
-                    text="Nova igra"
-                    onAction="#onNewGame"
-                    maxWidth="Infinity"
-                />
+                <Button fx:id="btnBack" maxWidth="Infinity" onAction="#onBackspace" text="Obriši poslednji" />
+                <Button fx:id="btnClear" maxWidth="Infinity" onAction="#onClear" text="Očisti unos" />
+                <Button fx:id="btnSubmit" defaultButton="true" maxWidth="Infinity" onAction="#onSubmit" text="Potvrdi" />
+                <Button fx:id="btnNewGame" maxWidth="Infinity" onAction="#onNewGame" text="Nova igra" />
             </VBox>
 
-            <Label text="(Opcionalno) Tajni kod" styleClass="sectionTitle" />
-            <HBox spacing="8" fx:id="secretBox" styleClass="secretBox">
+            <Label styleClass="sectionTitle" text="(Opcionalno) Tajni kod" />
+            <HBox fx:id="secretBox" spacing="8" styleClass="secretBox">
                 <!-- controller može po potrebi da popuni 4 slot-a na kraju igre -->
             </HBox>
 
