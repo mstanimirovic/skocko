@@ -13,7 +13,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         var url = Objects.requireNonNull(
             App.class.getResource("/org/stanimirovic/skocko/ui/game.fxml"),
-            "FXML Not Foudn"
+            "FXML Not Found"
         );
         FXMLLoader loader = new FXMLLoader(url);
 
@@ -28,7 +28,7 @@ public class App extends Application {
 
         stage.setTitle("Skocko");
         stage.setScene(scene);
-        stage.setMinWidth(800);
+        stage.setMinWidth(480);
         stage.setMinHeight(520);
         stage.show();
     }

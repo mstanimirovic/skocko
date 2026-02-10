@@ -256,7 +256,7 @@ public class GameController {
         if (isFinished()) return;
 
         if (current.size() != 4) {
-            messageLabel.setText("Unesi 4 simbola.");
+//            messageLabel.setText("Unesi 4 simbola.");
             return;
         }
 
@@ -274,23 +274,23 @@ public class GameController {
 
             // Prepare next row
             current.clear();
-            messageLabel.setText("");
+//            messageLabel.setText("");
 
             // End game?
             if (game.phase() == GamePhase.WON) {
-                messageLabel.setText("Pogodio si!");
+//                messageLabel.setText("Pogodio si!");
                 revealSecret();
             } else if (game.phase() == GamePhase.LOST) {
-                messageLabel.setText("Nema više pokušaja.");
+//                messageLabel.setText("Nema više pokušaja.");
                 revealSecret();
             }
 
             updateStatus();
             updateControls();
         } catch (RuntimeException ex) {
-            messageLabel.setText(
-                ex.getMessage() == null ? "Greška." : ex.getMessage()
-            );
+//            messageLabel.setText(
+//                ex.getMessage() == null ? "Greška." : ex.getMessage()
+//            );
         }
     }
 
@@ -304,13 +304,11 @@ public class GameController {
         if (isFinished()) return;
 
         if (current.size() >= 4) {
-            messageLabel.setText("Već imaš 4 simbola. Potvrdi ili obriši.");
             return;
         }
 
         current.add(symbol);
         renderCurrentRow();
-        messageLabel.setText("");
         updateControls();
     }
 
@@ -322,7 +320,6 @@ public class GameController {
         clearFeedbackUI();
         clearSecretUI();
 
-        messageLabel.setText("");
         updateStatus();
         updateControls();
 
@@ -330,7 +327,6 @@ public class GameController {
     }
 
     private Guess randomSecret() {
-        // Škocko standard: 4 simbola, dozvoljeni duplikati
         Symbol[] pool = Symbol.values();
         List<Symbol> secret = new ArrayList<>(4);
         for (int i = 0; i < 4; i++) {
@@ -349,7 +345,6 @@ public class GameController {
         if (game.phase() != GamePhase.BUILDING_GUESS) {
             attempt = Math.min(game.turns().size(), max);
         }
-        attemptLabel.setText("Pokušaj: " + attempt + "/" + max);
     }
 
     private void updateControls() {

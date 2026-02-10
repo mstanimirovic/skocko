@@ -12,8 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<BorderPane prefHeight="640" prefWidth="960" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.stanimirovic.skocko.ui.GameController">
-
+<?import java.net.URL?>
+<BorderPane prefHeight="520" prefWidth="480" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.stanimirovic.skocko.ui.GameController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
     <!-- TOP: naslov + status -->
     <top>
         <VBox spacing="6" BorderPane.alignment="CENTER">
@@ -21,12 +24,7 @@
                 <Insets bottom="10" left="16" right="16" top="16" />
             </padding>
 
-            <Label styleClass="title" text="Skocko" />
-
-            <HBox spacing="18">
-                <Label fx:id="attemptLabel" styleClass="muted" text="Pokušaj: 1/6" />
-                <Label fx:id="messageLabel" styleClass="muted" text="" />
-            </HBox>
+            <Label alignment="CENTER" styleClass="title" text="SKOCKO" />
         </VBox>
     </top>
 
@@ -39,8 +37,6 @@
 
             <!-- Left: guesses (6 x 4) -->
             <VBox spacing="10">
-                <Label styleClass="sectionTitle" text="Pokušaji" />
-
                 <GridPane fx:id="guessGrid" hgap="10" styleClass="board" vgap="10">
                     <!-- 6 redova * 4 kolone = 24 slot-a -->
                     <!-- Row 0 -->
@@ -89,12 +85,29 @@
                         <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
                     </rowConstraints>
                 </GridPane>
+
+                <GridPane hgap="10" vgap="10">
+                    <!-- Paleta dugmadi: u controlleru mapiraš na Symbol -->
+                    <Button fx:id="btnSkocko" onAction="#onPickSkocko" styleClass="paletteBtn" text="SKOCKO" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Button fx:id="btnTref" onAction="#onPickTref" styleClass="paletteBtn" text="TREF" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Button fx:id="btnPik" onAction="#onPickPik" styleClass="paletteBtn" text="PIK" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                    <Button fx:id="btnSrce" onAction="#onPickSrce" styleClass="paletteBtn" text="SRCE" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Button fx:id="btnKaro" onAction="#onPickKaro" styleClass="paletteBtn" text="KARO" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Button fx:id="btnZvezda" onAction="#onPickZvezda" styleClass="paletteBtn" text="ZVEZDA" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
             </VBox>
 
             <!-- Right: feedback (6 x 4 small dots) -->
             <VBox spacing="10">
-                <Label styleClass="sectionTitle" text="Povratna info" />
-
                 <GridPane fx:id="feedbackGrid" hgap="10" styleClass="board" vgap="10">
                     <!-- 6 redova * 4 tačkice = 24 -->
                     <!-- Row 0 -->
@@ -143,55 +156,12 @@
                         <RowConstraints maxHeight="64" minHeight="64" prefHeight="64" />
                     </rowConstraints>
                 </GridPane>
-
-                <Label styleClass="hint" text="Legenda: crveno=tačno mesto, žuto=tačan simbol" />
+                <Button fx:id="btnBack" maxWidth="Infinity" onAction="#onBackspace" text="UNDO" />
+                <Button fx:id="btnClear" maxWidth="Infinity" onAction="#onClear" text="CLEAR" />
+                <Button fx:id="btnSubmit" defaultButton="true" maxWidth="Infinity" onAction="#onSubmit" text="SUBMIT" />
+                <Button fx:id="btnNewGame" maxWidth="Infinity" onAction="#onNewGame" text="NEW GAME" />
             </VBox>
         </HBox>
     </center>
-
-    <!-- RIGHT: paleta + kontrole -->
-    <right>
-        <VBox spacing="14" BorderPane.alignment="TOP_CENTER">
-            <padding>
-                <Insets bottom="16" left="6" right="16" top="16" />
-            </padding>
-
-            <Label styleClass="sectionTitle" text="Simboli" />
-
-            <GridPane hgap="10" vgap="10">
-                <!-- Paleta dugmadi: u controlleru mapiraš na Symbol -->
-                <Button fx:id="btnSkocko" onAction="#onPickSkocko" styleClass="paletteBtn" text="Skocko" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Button fx:id="btnTref" onAction="#onPickTref" styleClass="paletteBtn" text="Tref" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Button fx:id="btnPik" onAction="#onPickPik" styleClass="paletteBtn" text="Pik" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Button fx:id="btnSrce" onAction="#onPickSrce" styleClass="paletteBtn" text="Srce" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Button fx:id="btnKaro" onAction="#onPickKaro" styleClass="paletteBtn" text="Karo" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                <Button fx:id="btnZvezda" onAction="#onPickZvezda" styleClass="paletteBtn" text="Zvezda" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <columnConstraints>
-               <ColumnConstraints />
-               <ColumnConstraints />
-            </columnConstraints>
-            <rowConstraints>
-               <RowConstraints />
-               <RowConstraints />
-               <RowConstraints />
-            </rowConstraints>
-            </GridPane>
-
-            <Label styleClass="sectionTitle" text="Kontrole" />
-
-            <VBox spacing="10">
-                <Button fx:id="btnBack" maxWidth="Infinity" onAction="#onBackspace" text="Obriši poslednji" />
-                <Button fx:id="btnClear" maxWidth="Infinity" onAction="#onClear" text="Očisti unos" />
-                <Button fx:id="btnSubmit" defaultButton="true" maxWidth="Infinity" onAction="#onSubmit" text="Potvrdi" />
-                <Button fx:id="btnNewGame" maxWidth="Infinity" onAction="#onNewGame" text="Nova igra" />
-            </VBox>
-
-            <Label styleClass="sectionTitle" text="(Opcionalno) Tajni kod" />
-            <HBox fx:id="secretBox" spacing="8" styleClass="secretBox">
-                <!-- controller može po potrebi da popuni 4 slot-a na kraju igre -->
-            </HBox>
-
-        </VBox>
-    </right>
 
 </BorderPane>
