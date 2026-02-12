@@ -15,7 +15,7 @@
 <?import java.net.URL?>
 <BorderPane prefHeight="520" prefWidth="480" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.stanimirovic.skocko.ui.GameController">
     <stylesheets>
-        <URL value="@style.css" />
+        <URL value="@game.css" />
     </stylesheets>
     <!-- TOP: naslov + status -->
     <top>

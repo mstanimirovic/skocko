@@ -1,26 +1,22 @@
 package org.stanimirovic.skocko.ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import org.stanimirovic.skocko.domain.*; // Symbol, Guess, Feedback, Turn, SkockoGame, GamePhase
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.stanimirovic.skocko.domain.*;
 
 public class GameController {
-
-    // ====== TOP STATUS ======
-    @FXML
-    private Label attemptLabel;
-
-    @FXML
-    private Label messageLabel;
-
     // ====== CONTROLS ======
     @FXML
     private Button btnSubmit;
@@ -30,10 +26,6 @@ public class GameController {
 
     @FXML
     private Button btnClear;
-
-    // ====== OPTIONAL SECRET REVEAL ======
-    @FXML
-    private HBox secretBox;
 
     // ====== BOARD CELLS (Guesses) ======
     @FXML
@@ -256,7 +248,6 @@ public class GameController {
         if (isFinished()) return;
 
         if (current.size() != 4) {
-//            messageLabel.setText("Unesi 4 simbola.");
             return;
         }
 
@@ -274,23 +265,51 @@ public class GameController {
 
             // Prepare next row
             current.clear();
-//            messageLabel.setText("");
 
             // End game?
             if (game.phase() == GamePhase.WON) {
-//                messageLabel.setText("Pogodio si!");
-                revealSecret();
+                showResultDialog(true);
             } else if (game.phase() == GamePhase.LOST) {
-//                messageLabel.setText("Nema više pokušaja.");
-                revealSecret();
+                showResultDialog(false);
             }
 
-            updateStatus();
             updateControls();
         } catch (RuntimeException ex) {
-//            messageLabel.setText(
-//                ex.getMessage() == null ? "Greška." : ex.getMessage()
-//            );
+            // TODO: ERROR POPUP
+        }
+    }
+
+    private void showResultDialog(boolean won) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("dialog.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initStyle(StageStyle.UTILITY);
+            dialogStage.setTitle(won ? "Win" : "Game Over");
+            dialogStage.setScene(scene);
+            dialogStage.setResizable(false);
+
+            DialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setOnNewGameCallback(this::newGame);
+
+            if (won) {
+                controller.showWin(game.turns().size());
+            } else {
+                controller.showLoss(game.secret().symbols());
+            }
+
+            dialogStage.showAndWait();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            // Fallback: just print to console
+            if (won) {
+                System.out.println("YOU WON!");
+            } else {
+                System.out.println("YOU LOST! Secret: " + game.secret().symbols());
+            }
         }
     }
 
@@ -318,9 +337,7 @@ public class GameController {
 
         clearBoardUI();
         clearFeedbackUI();
-        clearSecretUI();
 
-        updateStatus();
         updateControls();
 
         // Optionally highlight active row via CSS class; keeping it minimal here.
@@ -337,14 +354,6 @@ public class GameController {
 
     private boolean isFinished() {
         return game != null && game.phase() != GamePhase.BUILDING_GUESS;
-    }
-
-    private void updateStatus() {
-        int attempt = game.turns().size() + 1;
-        int max = 6;
-        if (game.phase() != GamePhase.BUILDING_GUESS) {
-            attempt = Math.min(game.turns().size(), max);
-        }
     }
 
     private void updateControls() {
@@ -398,16 +407,6 @@ public class GameController {
         }
     }
 
-    private void revealSecret() {
-        // Show secret in secretBox as 4 circles
-        clearSecretUI();
-        for (Symbol s : game.secret().symbols()) {
-            Circle c = new Circle(14);
-            c.setFill(colorFor(s));
-            secretBox.getChildren().add(c);
-        }
-    }
-
     private void clearBoardUI() {
         for (int r = 0; r < 6; r++) {
             for (int c = 0; c < 4; c++) {
@@ -422,12 +421,6 @@ public class GameController {
                 feedbackDots[r][c].setFill(Color.GRAY);
                 feedbackDots[r][c].setOpacity(0.15);
             }
-        }
-    }
-
-    private void clearSecretUI() {
-        if (secretBox != null) {
-            secretBox.getChildren().clear();
         }
     }
 
