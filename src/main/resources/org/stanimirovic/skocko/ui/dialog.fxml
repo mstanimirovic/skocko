@@ -19,7 +19,7 @@
     </padding>
 
     <!-- Title -->
-    <Label fx:id="titleLabel" styleClass="dialog-title" text="POBEDA!" />
+    <Label fx:id="titleLabel" styleClass="dialog-title" text="WIN!" />
 
     <!-- Message -->
     <Label fx:id="messageLabel" alignment="CENTER" styleClass="dialog-message" text="You Won!" wrapText="true" />
@@ -45,7 +45,7 @@
 
     <!-- Buttons -->
     <HBox alignment="CENTER" spacing="15">
-        <Button fx:id="btnNewGame" defaultButton="true" onAction="#onNewGame" styleClass="dialog-button" text="NOVA IGRA" />
-        <Button fx:id="btnClose" cancelButton="true" onAction="#onClose" styleClass="dialog-button-secondary" text="ZATVORI" />
+        <Button fx:id="btnNewGame" defaultButton="true" onAction="#onNewGame" styleClass="dialog-button" text="NEW GAME" />
+        <Button fx:id="btnClose" cancelButton="true" onAction="#onClose" styleClass="dialog-button-secondary" text="CLOSE" />
     </HBox>
 </VBox>
